@@ -110,6 +110,58 @@ const SYL=[
 {q:"Statement: 'Boil water before drinking.'\nAction: Govt should test water supply regularly.",o:["Follows","Does not follow","Partially","Can't say"],a:0},
 ];
 
+// ============ NOTES ============
+const NOTES={
+comp:[
+{t:"Computer Generations",p:["1st(1940-56): Vacuum Tubes, ENIAC, UNIVAC, machine language, huge, expensive","2nd(1956-63): Transistors, COBOL/FORTRAN, magnetic core memory, smaller","3rd(1963-71): ICs(Integrated Circuits), keyboards/monitors, OS introduced","4th(1971-now): Microprocessors, Intel 4004(first), PCs, GUIs, very fast","5th(future): AI, quantum computing, natural language, robotics"]},
+{t:"Hardware & CPU",p:["CPU = ALU + CU + Registers → 'Brain of Computer'","ALU: Arithmetic & Logic | CU: Controls operations | Registers: Fastest temp storage","Motherboard: Main circuit board | GPU: Graphics processing","Input: Keyboard, Mouse, Scanner, Mic, Webcam, Joystick, Light Pen, OCR, OMR, MICR, Barcode","Output: Monitor(CRT/LCD/LED), Printer(Dot Matrix/Inkjet/Laser), Speaker, Projector, Plotter","Both I/O: Touchscreen, Modem, USB Drive, Headset | MICR=Banks, OMR=Answer sheets"]},
+{t:"Memory & Storage",p:["RAM: Volatile, temporary, fast | ROM: Non-volatile, permanent, BIOS stored","RAM types: SRAM(fast,cache), DRAM(main memory) | ROM: PROM, EPROM, EEPROM","Cache: Fastest, between CPU & RAM | Virtual Memory: HDD used as RAM extension","1 Byte=8 Bits | 1KB=1024B | 1MB=1024KB | 1GB=1024MB | 1TB=1024GB","Storage: HDD, SSD(faster,no moving parts), CD(700MB), DVD(4.7GB), Pen Drive"]},
+{t:"Software & OS",p:["System SW: OS, Drivers, Utilities | Application SW: Word, Excel, Browser, Games","OS: Windows, Linux, macOS, Android, iOS | Kernel=Core | GUI vs CLI","Compiler: Whole program→exe | Interpreter: Line by line | Assembler: Assembly→Machine","Open Source: Linux, Firefox, Android | Proprietary: Windows, MS Office, macOS","Booting: Cold(from OFF), Warm(restart) | POST: Power On Self Test | BIOS initiates POST"]},
+{t:"MS Word",p:["Extension: .docx | Ctrl+B/I/U=Bold/Italic/Underline | Ctrl+L/E/R/J=Align","Ctrl+S=Save | F12=Save As | Ctrl+P=Print | Ctrl+N=New | Ctrl+O=Open","Ctrl+F=Find | Ctrl+H=Replace | F7=Spell Check | Ctrl+Z=Undo | Ctrl+Y=Redo","Features: Mail Merge, Track Changes, Header/Footer, Watermark, Footnote, TOC","Views: Print Layout, Web Layout, Outline, Draft, Read Mode"]},
+{t:"MS Excel",p:["Extension: .xlsx | Rows: 1,048,576 | Columns: 16,384(A to XFD) | Cell=Row+Column","Functions: =SUM(), =AVERAGE(), =COUNT(), =MAX(), =MIN(), =IF(), =VLOOKUP(), =HLOOKUP()","=COUNTIF(), =SUMIF(), =CONCATENATE(), =LEN(), =TRIM(), =NOW()","F2=Edit cell | Ctrl+;=Date | Charts: Bar, Line, Pie, Scatter | Pivot Table, Freeze Panes","Cell ref: Relative(A1), Absolute($A$1), Mixed($A1) | Conditional Formatting, Data Validation"]},
+{t:"MS PowerPoint & Access",p:["PPT(.pptx): Slide-based | F5=Show start | Shift+F5=Current slide | Ctrl+M=New slide","Animation=effects on objects | Transition=between slides | Slide Master=template","Access(.accdb): DBMS | Objects: Tables, Queries, Forms, Reports","Primary Key=unique ID | Foreign Key=links tables | SQL used for queries","Datatypes: Text, Number, Date/Time, Currency, AutoNumber, Yes/No, OLE"]},
+{t:"Email & Internet",p:["Internet: Network of networks | WWW: Tim Berners-Lee(1989) | Father: Vint Cerf","Email: Ray Tomlinson(@ symbol) | CC=visible copy | BCC=blind/hidden copy","Protocols: HTTP/HTTPS(web), FTP(files), SMTP(send mail), POP3/IMAP(receive)","IP: IPv4=32bit, IPv6=128bit | DNS=Domain→IP | URL | ISP | Browser: Chrome, Firefox","LAN<MAN<WAN | Topologies: Star(hub), Bus(cable), Ring, Mesh, Tree","Wi-Fi=IEEE 802.11 | Bluetooth=short range | Modem=Digital↔Analog | Router=connects networks","Threats: Virus, Worm, Trojan, Phishing, Ransomware | Security: Firewall, Antivirus, Encryption"]},
+{t:"Key Abbreviations",p:["CPU, ALU, CU, RAM, ROM, BIOS, USB, URL, HTML, CSS, SQL, PDF, ASCII, GUI, CLI","SMTP, FTP, HTTP, DNS, ISP, LAN, WAN, MAN, IP, TCP, UDP, SSD, HDD, CD, DVD","Wi-Fi, SIM, GPS, API, VIRUS, OCR, OMR, MICR, NTFS, POST, DBMS, RDBMS","Binary=Base2 | Octal=Base8 | Decimal=Base10 | Hexadecimal=Base16"]},
+],
+eng:[
+{t:"Articles (A/An/The)",p:["A: consonant sounds → a boy, a university(yu-), a European, a one-rupee note","An: vowel sounds → an apple, an hour(silent h), an honest man, an MLA, an MP, an FIR","The: specific/unique → the sun, the Ganga, the Himalayas, the USA, superlatives, ordinals","No article: proper nouns(India), meals(lunch), games(cricket), languages(Hindi)"]},
+{t:"Modals",p:["Can/Could: ability/request | May/Might: permission/possibility | Shall/Should: future/advice","Will/Would: future/polite/past habit | Must: compulsion | Ought to: moral duty","Used to: past habit | Need: necessity | Dare: courage | Must have: past certainty"]},
+{t:"Active & Passive Voice",p:["Active: S+V+O → Passive: O+be+V3+by+S","Present: writes→is written | Continuous: is writing→is being written","Past: wrote→was written | Perfect: has written→has been written","Modal: can write→can be written | Imperative: 'Open door'→'Let the door be opened'"]},
+{t:"Narration (Direct→Indirect)",p:["Past reporting → tense shifts: am→was, will→would, have→had, is→was","Said to→Told | Today→that day | Tomorrow→next day | Here→there | This→that | Now→then","Questions: asked+if/whether(yes/no) or asked+wh-word | No question mark in indirect","Commands: told/ordered+to | Negative: told+not to | Requests: requested+to"]},
+{t:"Synonyms & Antonyms",p:["Abundant=Plentiful↔Scarce | Bold=Brave↔Timid | Calm=Serene↔Turbulent","Diligent=Hardworking↔Lazy | Eminent=Distinguished↔Unknown | Genuine=Authentic↔Fake","Hostile=Unfriendly↔Friendly | Inevitable=Unavoidable↔Avoidable | Prudent=Wise↔Foolish","Commence=Begin↔Conclude | Conceal=Hide↔Reveal | Ascend=Rise↔Descend | Affluent=Rich↔Poor"]},
+{t:"Idioms & Phrases",p:["Piece of cake=Easy | White elephant=Costly useless | Burn midnight oil=Study late","Spill beans=Secret | Blue moon=Rarely | Eye to eye=Agree | Arm & leg=Expensive","Bell the cat=Risky task | Achilles heel=Weakness | Apple of discord=Quarrel cause","Cold shoulder=Ignore | New leaf=Fresh start | Feather in cap=Achievement | Sit on fence=Undecided"]},
+{t:"Prepositions & Common Errors",p:["At(time/point), In(month/year/city), On(day/date/surface) | Since+point, For+duration","Between(2), Among(3+) | Senior/Junior/Prefer → TO(not than) | Good AT, Fond OF","Error: 'Return back'→Return | 'Repeat again'→Repeat | 'Each have'→Each has","Fewer(countable), Less(uncountable) | Elder(family), Older(general)"]},
+{t:"One Word Substitutions",p:["Bibliophile=Book lover | Somnambulism=Sleepwalking | Misanthropist=Hates mankind","Posthumous=After death | Anonymous=Unknown name | Pseudonym=Pen name","Atheist=No god belief | Polyglot=Many languages | Insolvent=Can't pay debts","Potable=Drinkable | Inflammable=Catches fire | Illegible=Can't read | Edible=Can eat"]},
+{t:"Homophones",p:["Their/There/They're | Your/You're | Its/It's | Whose/Who's","Accept/Except | Affect/Effect | Advice(n)/Advise(v) | Principal/Principle","Stationary(still)/Stationery(paper) | Loose/Lose | Weather/Whether | Quiet/Quite"]},
+],
+jk:[
+{t:"J&K Geography",p:["Reorganized Oct 31, 2019 → J&K UT(legislature) + Ladakh UT(no legislature)","20 districts: 10 Kashmir(Srinagar,Budgam,Anantnag,Pulwama,Shopian,Kulgam,Bandipora,Baramulla,Kupwara,Ganderbal)","10 Jammu(Jammu,Samba,Kathua,Udhampur,Reasi,Rajouri,Poonch,Doda,Kishtwar,Ramban)","Rivers: Jhelum(Vitasta,from Verinag), Chenab(Chandrabhaga), Tawi(Jammu), Ravi(Kathua), Indus, Kishanganga","Lakes: Dal('Jewel of Kashmir',Srinagar), Wular(largest FW India,Bandipora), Manasbal('Supreme gem'), Nagin, Pangong(Ladakh)","Passes: Zoji La(Kashmir↔Ladakh), Banihal(Jammu↔Kashmir), Pir Panjal, Sinthan Top","Ranges: Karakoram, Great Himalayas, Pir Panjal, Shivalik | K2=8611m(Karakoram)","Glaciers: Siachen(longest outside polar), Kolahoi(Pahalgam), Machoi, Thajiwas(Sonamarg)","Crops: Saffron(Pampore,Karewa soil), Apple, Walnut, Almond, Cherry, Rice(Kashmir staple)","Flora: Chinar(state tree), Deodar, Pine | Fauna: Hangul(state animal), Snow Leopard, Musk Deer"]},
+{t:"J&K History",p:["Rajatarangini by Kalhana(1148-49): 8 Tarangas, earliest Kashmir history","Ashoka: Buddhism in Kashmir, founded Srinagar | Kanishka: 4th Buddhist Council, Kundalvan","Lalitaditya Muktapida: Greatest Hindu ruler, Martand Sun Temple, Karkota dynasty","Didda: Powerful queen of Kashmir | Avantivarman: Founded Avantipura","Shah Mir(1339): First Muslim dynasty | Zain-ul-Abidin(Budshah): Greatest, 'Akbar of Kashmir'","Sikandar Butshikan: Known for destroying temples | Rinchana: Ladakhi prince who converted","Mughal: Akbar conquered Kashmir 1586, built Hari Parbat Fort | Jahangir: Shalimar Bagh","Afghan rule(1752-1819): Harsh | Sikh rule(1819-1846): Under Ranjit Singh's generals","Treaty of Amritsar(1846): British sold J&K to Gulab Singh for ₹75 lakhs","Dogra: Gulab Singh→Ranbir Singh(Raghunath Temple)→Pratap Singh→Hari Singh(last ruler)","Instrument of Accession: Oct 26, 1947 | Article 370 abrogated: Aug 5, 2019","Article 35A (permanent residents) also scrapped Aug 5, 2019 | J&K UT: Oct 31, 2019"]},
+{t:"J&K Culture & Tourism",p:["Languages: Kashmiri, Dogri(8th Schedule 2003), Urdu(official), Gojri, Pahari, Balti","Dances: Rouf(Kashmir women), Dumhal(Wattal tribe), Bhand Pather(folk theater), Hafiz Nagma","Handicrafts: Pashmina(Changthangi goat), Paper Mache(Persia origin), Walnut carving, Carpet, Sozni, Crewel","Basohli paintings(Kathua): Famous miniature art | Wazwan: 36-course feast","Cuisine: Rogan Josh, Dum Aloo, Gushtaba, Kahwa(saffron tea), Noon Chai(pink/salt tea)","Tourism: Gulmarg(skiing), Pahalgam(Amarnath base), Sonamarg('Meadow of Gold'), Patnitop(Udhampur)","Temples: Vaishno Devi(Reasi), Amarnath(Anantnag), Shankaracharya(Srinagar), Raghunath(Jammu), Martand","Mughal Gardens: Shalimar Bagh(Jahangir), Nishat Bagh(Asif Khan), Chashme Shahi('Royal Spring')","Festivals: Navreh(Kashmiri NY), Tulip Festival(Asia's largest), Shikara Festival, Lohri, Baisakhi","Personalities: Kalhana, Lal Ded(mystic poetess), Habba Khatoon(Nightingale), Sheikh Abdullah(Lion/Sher-e-Kashmir), Mehjoor(Keats of Kashmir), Nund Rishi(patron saint)"]},
+{t:"J&K Economy & Facts",p:["Economy: Agriculture-based | Apple, Saffron, Walnut major exports","Saffron: Pampore(Karewa soil) | Willow: Cricket bats(Anantnag) | Silk: Sericulture in Kashmir","Summer capital: Srinagar | Winter capital: Jammu | LG: Manoj Sinha","First LG: G.C. Murmu | State bird: Black-necked Crane | State flower: Lotus","Dachigam NP: Hangul | Salim Ali NP: Srinagar | Kishtwar NP | Kashmir called 'Paradise on Earth'","Banihal-Qazigund Tunnel(Navyug): Connects Jammu-Kashmir | Mughal Road: Shopian-Rajouri"]},
+],
+gk:[
+{t:"Indian Constitution",p:["Adopted Nov 26, 1949 | Enforced Jan 26, 1950 | B.R. Ambedkar: Drafting Committee Chairman","Preamble: Sovereign, Socialist, Secular, Democratic, Republic (42nd Amend added Socialist & Secular)","Fundamental Rights: Art 14-32 | DPSPs: Art 36-51 | Duties: Art 51A(42nd Amend, now 11)","Art 14: Equality | Art 17: Abolish untouchability | Art 19: 6 Freedoms | Art 21: Right to Life","Art 21A: Education(6-14) | Art 32: Constitutional Remedies('Heart & Soul' — Ambedkar)"]},
+{t:"Indian Polity",p:["President: Head of State, Electoral College, 5yr | PM: Head of Govt, majority leader Lok Sabha","Lok Sabha: 543 elected, 5yr, age 25, Speaker | Rajya Sabha: 245, 6yr(1/3 retire), age 30, VP=Chairman","Supreme Court: CJI+33 judges, Art 124 | High Court: Art 214 | Governor: Art 153, appointed by President","Emergency: National(352), President's Rule(356), Financial(360) | Money Bill: Only Lok Sabha","42nd Amend: 'Mini Constitution' | Art 368: Amendment | CAG: Art 148 | AG: Art 76"]},
+{t:"Indian History",p:["IVC: Harappa, Mohenjo-daro(Great Bath), Lothal(dockyard) ~2500 BC","Vedic: 4 Vedas(Rig,Sama,Yajur,Atharva) | Maurya: Chandragupta→Ashoka(Kalinga→Buddhism)","Ashoka: Lion Capital=National Emblem | Chanakya: Arthashastra | Gupta: Golden Age","Mughal: Babur(1526,Panipat I)→Akbar(Din-i-Ilahi)→Shah Jahan(Taj Mahal)→Aurangzeb","Plassey 1757 | Buxar 1764 | 1857 Revolt | INC 1885(Hume) | Muslim League 1906","Jallianwala Bagh 1919 | Salt March 1930 | Quit India 1942('Do or Die') | Independence Aug 15, 1947"]},
+{t:"Geography, Science & Static GK",p:["Largest state: Rajasthan | Smallest: Goa | Most pop: UP | Longest river: Ganga(2525km)","Narmada & Tapi → Arabian Sea(west) | Rest → Bay of Bengal(east) | Chilika: Largest saltwater lake","National: Animal=Tiger, Bird=Peacock, Flower=Lotus, Tree=Banyan, Fruit=Mango, River=Ganga","1st PM: Nehru | 1st Pres: Rajendra Prasad | 1st woman PM: Indira | 1st woman Pres: Pratibha Patil","Nobel: Tagore(1913,Lit), Raman(1930,Physics), Teresa(1979,Peace), Sen(1998,Econ)","Vitamins: A=Night vision, B=Energy, C=Scurvy, D=Bones/Rickets, E=Skin, K=Blood clotting","Blood: O=universal donor, AB=universal recipient | Smallest bone: Stapes | Largest: Femur","pH: 0-14, 7=neutral | Speed of light: 3×10⁸ m/s | Ozone: Stratosphere","Census every 10yr | Most literate: Kerala | Sex ratio highest: Kerala | NH-44: Longest NH"]},
+],
+syl:[
+{t:"Syllogism Rules (MUST MEMORIZE)",p:["FORMAT: Two Statements → Check if Conclusions follow","All A are B = Complete overlap | Some A are B = Partial overlap | No A is B = Zero overlap","All A→B: Some A→B ✓, Some B→A ✓ | No A→B: No B→A ✓ | Some A→B: Some B→A ✓","GOLDEN: All+All=All | All+No=No | All+Some=Some | Some+Some=No conclusion","Some A are not B → CANNOT be reversed","'Either I or II' = Both can't be true together but one must be true"]},
+{t:"How to Solve",p:["Step 1: Draw Venn diagram for Statement 1","Step 2: Extend diagram for Statement 2","Step 3: Check each conclusion — must be true in ALL possible diagrams","Step 4: If conclusion CAN be false in any valid diagram → Does NOT follow","TRICK: 'Either I or II' = when I and II are contradictory (one says 'some', other says 'no')"]},
+{t:"Statement-Assumption",p:["Assumption = taken for granted, not stated directly","Test: Remove assumption → does statement still make sense? If NO → Implicit","Overly broad assumptions = usually WRONG | Specific matching ones = usually CORRECT","'Everyone will buy' from an ad = NOT implicit | 'People want quality' from quality ad = Implicit"]},
+{t:"Statement-Argument & Course of Action",p:["Strong argument: Direct, factual, important | Weak: Vague, emotional, extreme","'Everyone does it' = WEAK | 'Studies show...' = STRONG | 'Ban everything' = Usually invalid","Valid action: Practical, addresses problem | Invalid: Extreme, impractical, unrelated"]},
+],
+math:[
+{t:"Percentage & Average",p:["X% of Y = Y% of X = XY/100 | 10%=1/10, 12.5%=1/8, 20%=1/5, 25%=1/4, 33.3%=1/3, 50%=1/2","Increase R%: ×(100+R)/100 | Decrease R%: ×(100-R)/100 | Successive: a+b+ab/100","If A is R% more than B → B is [R/(100+R)]×100% less than A","Average = Sum/Count | First n natural: (n+1)/2 | First n even: n+1 | First n odd: n"]},
+{t:"Profit/Loss & Interest",p:["P% = (SP-CP)/CP×100 | L% = (CP-SP)/CP×100 | SP = CP×(100±P%)/100","Discount% = Disc/MP×100 | SP = MP×(100-D%)/100 | SP of X items=CP of Y → P%=(Y-X)/X×100","SI = PRT/100 | CI = P(1+R/100)^T - P | CI-SI(2yr) = P(R/100)² | Doubles: R=100/T"]},
+{t:"Time-Work & Speed-Distance",p:["A(a days)+B(b days) together = ab/(a+b) | If A is twice efficient → half time","Pipes: Fill(+), Empty(-) | A fills 6hr, B empties 8hr → Net=1/6-1/8=1/24 → 24hr","S=D/T | km/h→m/s: ×5/18 | m/s→km/h: ×18/5 | Avg speed(same D)=2S₁S₂/(S₁+S₂)","Train+pole: L/S | Train+platform: (L₁+L₂)/S | Relative: opposite=S₁+S₂, same=|S₁-S₂|"]},
+{t:"Number System",p:["BODMAS: Brackets→Of→Division→Multiplication→Addition→Subtraction","Divisibility: 2(even), 3(digit sum÷3), 4(last 2÷4), 5(ends 0/5), 8(last 3÷8), 9(digit sum÷9), 11(alt diff÷11)","LCM×HCF = Product of two numbers","Squares: 11²=121,12²=144,13²=169,14²=196,15²=225,16²=256,17²=289,18²=324,19²=361,20²=400","Cubes: 2³=8,3³=27,4³=64,5³=125,6³=216,7³=343,8³=512,9³=729,10³=1000"]},
+{t:"Series & Coding-Decoding",p:["Check: +const, ×const, squares, cubes, primes, fibonacci, alternating diffs","Primes: 2,3,5,7,11,13,17,19,23,29,31,37,41,43,47 | Fibonacci: 1,1,2,3,5,8,13,21,34","Coding: Letter shift(+1: A→B, CAT→DBU), reverse, number substitution","A=1...Z=26 | Opposite pairs sum=27: A↔Z, B↔Y, C↔X, D↔W"]},
+{t:"Blood Relations & Direction",p:["Draw family tree ALWAYS | Read question from END to START","Father's/Mother's son=Brother, daughter=Sister | Father's brother=Uncle, sister=Aunt","Direction: N(up),S(down),E(right),W(left) | Right from N=E | Left from N=W","Shortest distance: √(a²+b²) | Total in row = Left + Right - 1"]},
+],
+};
+
 const JKGK=[
 {q:"Rajatarangini written by?",o:["Bilhana","Kalhana","Jonaraja","Srivara"],a:1},
 {q:"Ancient name of Jhelum?",o:["Chandrabhaga","Vitasta","Shatadru","Askini"],a:1},
@@ -585,7 +637,7 @@ export default function App() {
       </div>
 
       <div style={{display:"flex",gap:1,borderBottom:"1px solid #e5e5e5",marginBottom:10,overflowX:"auto"}}>
-        {[["plan","📅 Plan"],["study","📖 Practice"],["mock","🎯 Mock Test"],["wrong","❌ Wrong Qs"],["tips","💡 Tips"]].map(([t,l])=>
+        {[["plan","📅 Plan"],["notes","📝 Notes"],["study","📖 Practice"],["mock","🎯 Mock Test"],["wrong","❌ Wrong Qs"],["tips","💡 Tips"]].map(([t,l])=>
           <button key={t} onClick={()=>{setTab(t);if(t==="study"){rst();setWrongMode(false);}if(t==="wrong"){rst();setWrongMode(true);}}} style={tS(t)}>{l}{t==="wrong"&&wrong.length>0?` (${wrong.length})`:""}</button>
         )}
       </div>
@@ -596,6 +648,25 @@ export default function App() {
           <div style={{display:"flex",justifyContent:"space-between"}}><span style={{fontWeight:700,fontSize:12}}>{d&&!ex?"✅ ":ex?"🎯 ":"⬜ "}Day {s.d}: {s.t}</span><span style={{fontSize:10,color:"#888"}}>{s.hr}</span></div>
           <div style={{fontSize:10.5,color:"#555",marginTop:2}}>{s.tk.map((t,i)=><span key={i}>{i>0?" • ":""}{t}</span>)}</div>
         </div>})}
+      </div>}
+
+      {tab === "notes" && <div style={{ marginTop: 8 }}>
+        <div style={{ fontWeight: 700, fontSize: 16, marginBottom: 12 }}>📝 Quick Notes</div>
+        {Object.entries(NOTES).map(([cat, arr]) => (
+          <div key={cat} style={{marginBottom:18,padding:12,borderRadius:8,background:"#fafafa",border:"1px solid #e8e8e8",boxShadow:"0 1px 2px rgba(0,0,0,0.03)"}}>
+            <div style={{fontWeight:600,fontSize:13,marginBottom:6,textTransform:"capitalize",color:"#4f46e5"}}>{cat}</div>
+            {arr.map((n, i) => (
+              <div key={i} style={{marginBottom:7}}>
+                <div style={{fontWeight:500,fontSize:12,marginBottom:2,color:"#222"}}>{n.t}</div>
+                <ul style={{margin:0,paddingLeft:18}}>
+                  {n.p.map((pt, j) => (
+                    <li key={j} style={{fontSize:11,lineHeight:1.7,color:"#444",marginBottom:2}}>{pt}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        ))}
       </div>}
 
       {/* STUDY */}
@@ -669,7 +740,7 @@ export default function App() {
         </div>)}
       </div>}
 
-      <div style={{textAlign:"center",padding:10,fontSize:10,color:"#aaa"}}>{totalQ} MCQs • Syllogism Heavy • Mock Test • Wrong Tracker</div>
+      <div style={{textAlign:"center",padding:10,fontSize:10,color:"#aaa"}}>{totalQ} MCQs Created By Sharif Jeelani</div>
     </div>
   );
 }

@@ -1,22 +1,34 @@
 import { useState, useEffect, useRef } from "react";
 
-const ED=new Date("2026-04-05");
-const dl=()=>Math.max(0,Math.ceil((ED-new Date())/864e5));
+const ED=new Date("2026-04-18");
+const dl=()=>{const n=new Date();const diff=ED-n;if(diff<=0)return{d:0,h:0,m:0};const d=Math.floor(diff/864e5);const h=Math.floor((diff%864e5)/36e5);const m=Math.floor((diff%36e5)/6e4);return{d,h,m};};
 
 const SCHED=[
-{d:1,dt:"Mar 24",t:"Battlefield Scan",tk:["Solve 1 previous paper (untimed)","Identify strong/weak areas","Read all notes in this app once"],hr:"7-9:30PM"},
-{d:2,dt:"Mar 25",t:"Computers I",tk:["Generations, Basics, Memory, I/O","MS Word, Excel, PPT, Access","Practice 50 Computer MCQs"],hr:"7-9:30PM"},
-{d:3,dt:"Mar 26",t:"Computers II + Reasoning",tk:["OS, Email, Internet, Abbreviations","Number/Letter Series, Coding-Decoding","Practice 40 MCQs"],hr:"7-9:30PM"},
-{d:4,dt:"Mar 27",t:"Reasoning + Syllogisms",tk:["Blood Relations, Direction Sense","HEAVY: Statement-Conclusion (30+ Qs)","Practice ALL syllogism MCQs"],hr:"7-9:30PM"},
-{d:5,dt:"Mar 28",t:"Maths",tk:["Percentage, Average, Ratio, Profit/Loss","Time & Work, Speed/Distance","Practice 50 Maths MCQs"],hr:"7-9:30PM"},
-{d:6,dt:"Mar 29 (Sat)",t:"J&K GK Deep Dive",tk:["History, Geography, Rivers, Lakes, Passes","Culture, Tourism, Economy, Flora/Fauna","Practice 60 J&K MCQs","EXTRA TIME: Weekend!"],hr:"7-10PM+"},
-{d:7,dt:"Mar 30 (Sun)",t:"India GK + Polity",tk:["Constitution, Polity, Indian History","Census, Transport, Rivers, Science","Practice 50 GK MCQs"],hr:"10AM-1PM + 7-9:30PM"},
-{d:8,dt:"Mar 31",t:"English I",tk:["Articles, Modals, Voice, Narration","Prepositions, Homophones, Punctuation","Practice 40 English MCQs"],hr:"7-9:30PM"},
-{d:9,dt:"Apr 1",t:"English II",tk:["Synonyms, Antonyms, Idioms","Comprehension, Jumbled, Editing","Practice 40 English MCQs"],hr:"7-9:30PM"},
-{d:10,dt:"Apr 2",t:"Previous Year Focus",tk:["Practice all PYQ-style questions","Focus on most-repeated topics","Mark all wrong answers for review"],hr:"7-9:30PM"},
-{d:11,dt:"Apr 3",t:"Weak Areas + Syllogisms",tk:["Revise weakest unit","Re-do ALL Statement-Conclusion Qs","Re-attempt all wrong MCQs"],hr:"7-9:30PM"},
-{d:12,dt:"Apr 4",t:"Mock Test + Revision",tk:["80-Q timed mock (80 min)","Review wrong answers","Quick revision: J&K + Abbrev + Idioms"],hr:"7-10PM"},
-{d:13,dt:"Apr 5",t:"EXAM DAY 🎯",tk:["30-min quick revision of key facts","Admit card + ID + pen + water ready","Stay calm → Attempt ALL 80 Qs → YOU'VE GOT THIS!"],hr:"Morning"},
+{d:1,dt:"Mar 25",t:"Battlefield Scan",tk:["Solve 1 mock test (untimed)","Note your score & weak subjects","Read all Quick Facts in this app"],hr:"Any time"},
+{d:2,dt:"Mar 26",t:"Computers I",tk:["Generations, Hardware, CPU, Memory","Input/Output devices, Storage types","50 Computer MCQs + Flash cards"],hr:"7-9:30PM"},
+{d:3,dt:"Mar 27",t:"Computers II",tk:["OS, Software, MS Word, Excel shortcuts","PPT, Access, Compiler vs Interpreter","50 Computer MCQs"],hr:"7-9:30PM"},
+{d:4,dt:"Mar 28",t:"Internet & Networking",tk:["Email, Protocols(SMTP/FTP/HTTP)","LAN/MAN/WAN, Viruses, Cybersecurity","All Abbreviations flash cards"],hr:"7-9:30PM"},
+{d:5,dt:"Mar 29 (Sun)",t:"Reasoning I — Series & Coding",tk:["Number/Letter Series patterns","Coding-Decoding, Odd one out","50 Reasoning MCQs"],hr:"Morning + 7-9PM"},
+{d:6,dt:"Mar 30",t:"Syllogisms DEEP DIVE",tk:["All+All=All | All+No=No rules","Statement-Conclusion + Assumption","80+ Syllogism MCQs — aim 80%"],hr:"7-9:30PM"},
+{d:7,dt:"Mar 31",t:"Syllogisms Practice II",tk:["Course of Action + Arguments","Do ALL wrong syllogisms again","Flash cards: Syllogism rules"],hr:"7-9:30PM"},
+{d:8,dt:"Apr 1",t:"J&K History",tk:["Ancient kings → Dogra rulers","Key dates: 1339, 1586, 1846, 1947, 2019","60 J&K History MCQs"],hr:"7-9:30PM"},
+{d:9,dt:"Apr 2",t:"J&K Geography",tk:["Rivers, Lakes, Passes, Glaciers, Peaks","All 20 districts + capitals","50 J&K Geography MCQs"],hr:"7-9:30PM"},
+{d:10,dt:"Apr 3",t:"J&K Culture & Economy",tk:["Dances, Handicrafts, Cuisine, Tourism","Personalities (Lal Ded, Mehjoor, Kalhana)","50 J&K Culture MCQs"],hr:"7-9:30PM"},
+{d:11,dt:"Apr 4 (Sat)",t:"English I — Grammar",tk:["Articles (A/An/The), Modals","Active-Passive Voice, Direct-Indirect","50 English Grammar MCQs"],hr:"All day available"},
+{d:12,dt:"Apr 5 (Sun)",t:"English II — Vocabulary",tk:["Synonyms, Antonyms (50 pairs)","Idioms, One Word Substitutions","50 English Vocab MCQs"],hr:"All day available"},
+{d:13,dt:"Apr 6",t:"India GK + Constitution",tk:["Fundamental Rights (Art 14-32)","Indian History: Mughal→Independence","60 India GK MCQs"],hr:"7-9:30PM"},
+{d:14,dt:"Apr 7",t:"Maths I",tk:["Percentage, Average, Ratio","Profit/Loss, Discount, Simple Interest","40 Maths MCQs"],hr:"7-9:30PM"},
+{d:15,dt:"Apr 8",t:"Maths II",tk:["Compound Interest, Time-Work","Speed-Distance, Number System","40 Maths MCQs"],hr:"7-9:30PM"},
+{d:16,dt:"Apr 9",t:"Revision — Computers",tk:["All Computer notes + Flash cards","All Abbreviations (must know 30+)","50 Computer MCQs timed"],hr:"7-9:30PM"},
+{d:17,dt:"Apr 10",t:"Revision — J&K GK",tk:["History + Geography + Culture Flash cards","Key dates, rulers, rivers, lakes","60 J&K MCQs — aim 80%+"],hr:"7-9:30PM"},
+{d:18,dt:"Apr 11 (Sat)",t:"Mock Test 1",tk:["80Q timed (80 min)","Target: 50+ marks","Review ALL wrong answers tonight"],hr:"Full day"},
+{d:19,dt:"Apr 12 (Sun)",t:"Weak Area Attack",tk:["Focus ONLY on weakest 2 subjects","Wrong tab until all correct","Flash cards for weak topics"],hr:"All day"},
+{d:20,dt:"Apr 13",t:"Revision — Syllogisms + Reasoning",tk:["All statement types revision","Blood Relations, Direction Sense","80 Reasoning MCQs"],hr:"7-9:30PM"},
+{d:21,dt:"Apr 14",t:"Revision — English + GK",tk:["Grammar rules quick card review","Important GK one-liners","40 MCQs each subject"],hr:"7-9:30PM"},
+{d:22,dt:"Apr 15",t:"Mock Test 2",tk:["Full 80Q timed mock","Target: 55+ marks","Detailed wrong answer analysis"],hr:"7-10PM"},
+{d:23,dt:"Apr 16",t:"Wrong Answers Sweep",tk:["All wrong from both mock tests","Re-read notes for those topics","Light study — don't overload"],hr:"7-9PM"},
+{d:24,dt:"Apr 17",t:"Final Revision Day",tk:["Flash cards — all subjects (30 min)","Key facts: dates, names, formulas","Sleep by 10PM — exam tomorrow!"],hr:"Morning only"},
+{d:25,dt:"Apr 18",t:"EXAM DAY 🎯",tk:["Arrive 30 min early","Attempt ALL 80 Qs (no negative marking)","Eliminate 2 options → guess if unsure → YOU'VE GOT THIS!"],hr:"Morning"},
 ];
 
 // ============ NOTES ============
@@ -384,6 +396,70 @@ const GK=[
 {q:"Last Viceroy of India?",o:["Curzon","Mountbatten","Irwin","Wavell"],a:1},
 ];
 
+// ============ FLASH CARDS ============
+const FLASH=[
+// J&K
+{f:"Who wrote Rajatarangini?",b:"KALHANA • Written 1148-49 AD • Has 8 Tarangas • Earliest written history of Kashmir",cat:"jk"},
+{f:"What is Zain-ul-Abidin's title?",b:"BUDSHAH = 'Great King' • Greatest ruler of Kashmir • Called 'Akbar of Kashmir' • Shah Mir dynasty",cat:"jk"},
+{f:"Treaty of Amritsar — Year & Amount?",b:"1846 • British SOLD J&K to Gulab Singh for ₹75 LAKHS • Gulab Singh became first Dogra ruler",cat:"jk"},
+{f:"J&K Instrument of Accession — Date?",b:"Oct 26, 1947 • Signed by Hari Singh (last Dogra ruler) • After Pakistan's tribal attack",cat:"jk"},
+{f:"Article 370 abrogated — Date?",b:"August 5, 2019 • J&K became UT on Oct 31, 2019 • Article 35A also scrapped same day",cat:"jk"},
+{f:"Wular Lake — What & Where?",b:"LARGEST FRESHWATER LAKE IN INDIA • Located in Bandipora district • River Jhelum flows through it",cat:"jk"},
+{f:"Jhelum ancient name & source?",b:"Ancient name = VITASTA • Source = Verinag Spring (Anantnag) • Flows through Dal Lake → Pakistan",cat:"jk"},
+{f:"Saffron — Where grown & soil type?",b:"PAMPORE (near Srinagar) • Grown in KAREWA soil • J&K produces 90% of India's saffron",cat:"jk"},
+{f:"Siachen Glacier — What's special?",b:"LONGEST GLACIER outside polar regions • Located in Karakoram range • K2 (8611m) also in Karakoram",cat:"jk"},
+{f:"Mughal rulers who loved Kashmir?",b:"AKBAR: Conquered 1586, Hari Parbat Fort • JAHANGIR: 'If there is paradise...' Shalimar Bagh • Nishat Bagh by Asif Khan",cat:"jk"},
+{f:"3 Mughal Gardens of Kashmir?",b:"1. SHALIMAR BAGH — Jahangir • 2. NISHAT BAGH — Asif Khan (Shah Jahan's father-in-law) • 3. CHASHME SHAHI — 'Royal Spring'",cat:"jk"},
+{f:"J&K State Symbols?",b:"Animal: HANGUL (deer, Dachigam NP) • Bird: BLACK-NECKED CRANE • Flower: LOTUS • Tree: CHINAR",cat:"jk"},
+{f:"Passes of J&K?",b:"ZOJI LA: Kashmir↔Ladakh • BANIHAL: Jammu↔Kashmir (Navyug Tunnel) • PIR PANJAL: divides Jammu-Kashmir • SINTHAN TOP",cat:"jk"},
+{f:"J&K Famous Personalities?",b:"KALHANA: Historian • LAL DED: Mystic poetess • HABBA KHATOON: Nightingale of Kashmir • MEHJOOR: Keats of Kashmir • NUND RISHI: Patron saint",cat:"jk"},
+{f:"Districts of J&K — How many?",b:"TOTAL 20 = 10 Kashmir + 10 Jammu • Ladakh (separate UT) has 2 districts: Leh + Kargil",cat:"jk"},
+// Computers
+{f:"Computer Generation shortcuts?",b:"1st: VACUUM TUBES (ENIAC,UNIVAC) • 2nd: TRANSISTORS • 3rd: ICs • 4th: MICROPROCESSORS • 5th: AI/Quantum",cat:"comp"},
+{f:"CPU components?",b:"ALU (Arithmetic & Logic) + CU (Control Unit) + REGISTERS = CPU • Called 'Brain of Computer' • Fastest memory = Cache",cat:"comp"},
+{f:"RAM vs ROM?",b:"RAM: Volatile (loses on power off) • ROM: Non-volatile (permanent, BIOS stored) • Cache: Fastest (between CPU & RAM)",cat:"comp"},
+{f:"MS Word key shortcuts?",b:"Ctrl+B/I/U=Bold/Italic/Underline • F7=Spell Check • F12=Save As • Ctrl+H=Replace • Ctrl+F=Find • Ctrl+Z=Undo",cat:"comp"},
+{f:"MS Excel important facts?",b:"Rows: 1,048,576 • Cols: 16,384 (A to XFD) • Extension: .xlsx • =VLOOKUP()=Vertical lookup • =IF()=condition",cat:"comp"},
+{f:"Internet protocols — which does what?",b:"HTTP/HTTPS=web browsing • FTP=file transfer • SMTP=SENDING email • POP3/IMAP=RECEIVING email • DNS=domain to IP",cat:"comp"},
+{f:"Networking — LAN/MAN/WAN?",b:"LAN<MAN<WAN (size order) • Wi-Fi=IEEE 802.11 • Bluetooth=short range • IP: IPv4=32bit, IPv6=128bit",cat:"comp"},
+{f:"MS Office file extensions?",b:"Word=.docx • Excel=.xlsx • PowerPoint=.pptx • Access=.accdb • PDF=Portable Document Format",cat:"comp"},
+{f:"Computer threats?",b:"VIRUS: self-replicating • WORM: spreads via network • TROJAN: disguised malware • PHISHING: fake sites • RANSOMWARE: locks data",cat:"comp"},
+// English
+{f:"Articles — A vs An vs The?",b:"A: consonant SOUND (a university=yu) • An: vowel SOUND (an hour=silent h, an MLA, an FIR) • The: specific/unique (the sun, the Himalayas)",cat:"eng"},
+{f:"Tricky Article examples?",b:"A European (eu=y sound) • An honest man (h silent) • A one-rupee note (w sound) • An MP, An FIR (vowel sound letters)",cat:"eng"},
+{f:"Passive Voice quick rule?",b:"Active: S+V+O → Passive: O+be+V3+by+S • Present: writes→is written • Past: wrote→was written • Modal: can write→can be written",cat:"eng"},
+{f:"Direct→Indirect speech tense shifts?",b:"am/is→was • will→would • have→had • can→could • 'said to'→'told' • today→that day • here→there • now→then",cat:"eng"},
+{f:"Preposition tricks?",b:"Senior/Junior/Prefer → TO (not than) • Good AT • Fond OF • Since+point time • For+duration • Between(2) Among(3+)",cat:"eng"},
+{f:"Common Error pairs?",b:"Return back→Return • Repeat again→Repeat • Each has (not have) • Fewer=countable • Less=uncountable • Elder=family only",cat:"eng"},
+{f:"Idioms — 10 most common?",b:"Piece of cake=easy • Burn midnight oil=study late • Spill beans=reveal secret • White elephant=costly useless • Bite bullet=endure pain",cat:"eng"},
+// India GK
+{f:"Constitution key dates?",b:"Drafted: Ambedkar (Chairman) • Adopted: Nov 26, 1949 (Constitution Day) • Enforced: Jan 26, 1950 (Republic Day)",cat:"gk"},
+{f:"Fundamental Rights — Article numbers?",b:"Art 14: Equality • Art 17: No untouchability • Art 19: 6 Freedoms • Art 21: Right to Life • Art 21A: Education (6-14) • Art 32: Remedies",cat:"gk"},
+{f:"Parliament — age & tenure?",b:"Lok Sabha: 543 elected, age 25+, 5 years • Rajya Sabha: 245 total, age 30+, 6 years (1/3 retire every 2yr) • VP=Rajya Sabha Chairman",cat:"gk"},
+{f:"National symbols of India?",b:"Animal=Tiger • Bird=Peacock • Flower=Lotus • Tree=Banyan • Fruit=Mango • River=Ganga • Sport=Hockey (de facto)",cat:"gk"},
+{f:"Indian history — key dates?",b:"1526=Panipat I (Babur) • 1757=Plassey • 1857=First revolt • 1885=INC founded • 1919=Jallianwala Bagh • 1942=Quit India • 1947=Independence",cat:"gk"},
+{f:"Blood types?",b:"O=Universal DONOR • AB=Universal RECIPIENT • Smallest bone=STAPES (ear) • Largest bone=FEMUR (thigh) • Largest organ=SKIN",cat:"gk"},
+{f:"Vitamins deficiency diseases?",b:"A=Night blindness • B=Beriberi • C=Scurvy • D=Rickets • E=Skin problems • K=Bleeding disorder",cat:"gk"},
+// Maths formulas
+{f:"Percentage key formulas?",b:"X% of Y = XY/100 • 10%=1/10 • 25%=1/4 • 33.3%=1/3 • If A is R% more than B → B is [R/(100+R)]×100% less",cat:"math"},
+{f:"Profit & Loss formulas?",b:"P% = (SP-CP)/CP × 100 • SP = CP×(100+P%)/100 • Discount%=Disc/MP×100 • If SP of X = CP of Y → Profit%=(Y-X)/X×100",cat:"math"},
+{f:"Simple vs Compound Interest?",b:"SI = PRT/100 • CI = P(1+R/100)^T - P • CI-SI for 2yr = P(R/100)² • Money doubles: T=100/R years",cat:"math"},
+{f:"Speed, Distance, Time tricks?",b:"km/h to m/s: ×5/18 • m/s to km/h: ×18/5 • Train+pole: L/S • Train+platform: (L₁+L₂)/S • Avg speed same dist: 2S₁S₂/(S₁+S₂)",cat:"math"},
+{f:"Syllogism Golden Rules?",b:"All+All=All • All+No=No • All+Some=No conclusion • Some+Some=No conclusion • 'Either I or II' = contradictory conclusions",cat:"syl"},
+{f:"How to draw Venn diagram?",b:"All A→B = A circle INSIDE B • No A→B = circles SEPARATE • Some A→B = circles OVERLAPPING • Check ALL possible diagrams",cat:"syl"},
+];
+
+const QUICK=[
+{cat:"J&K Key Dates",color:"#7c3aed",items:["1148-49: Rajatarangini by Kalhana","1339: Shah Mir — 1st Muslim dynasty","1586: Akbar conquered Kashmir","1752-1819: Afghan rule","1819-1846: Sikh rule","1846: Treaty of Amritsar — ₹75 lakhs","Oct 26, 1947: Instrument of Accession","Aug 5, 2019: Art 370 abrogated","Oct 31, 2019: J&K became UT"]},
+{cat:"J&K Geography Facts",color:"#059669",items:["20 districts: 10 Kashmir + 10 Jammu","Summer capital: Srinagar | Winter: Jammu","Wular = Largest freshwater lake India (Bandipora)","Dal = 'Jewel of Kashmir' (Srinagar)","Jhelum/Vitasta: source Verinag, flows through Dal","K2 = 8611m, Karakoram range","Siachen = Longest glacier outside polar","Zoji La: Kashmir↔Ladakh | Banihal: Jammu↔Kashmir","State animal: Hangul | State bird: Black-necked Crane"]},
+{cat:"J&K Culture",color:"#dc2626",items:["Rouf: Kashmir women's dance","Dumhal: Wattal tribe dance","Bhand Pather: Folk theater","Wazwan: 36-course feast","Pashmina: from Changthangi goat","Lal Ded: Mystic poetess","Habba Khatoon: Nightingale of Kashmir","Mehjoor: Keats of Kashmir","Paper Mache: origin Persia → Kashmir"]},
+{cat:"Computers Quick Facts",color:"#2563eb",items:["1st gen: Vacuum Tubes (ENIAC,UNIVAC)","Intel 4004: first microprocessor (4th gen)","RAM=volatile | ROM=non-volatile | Cache=fastest","IPv4=32bit | IPv6=128bit","SMTP=send email | POP3/IMAP=receive","WWW: Tim Berners-Lee (1989) | Email: Ray Tomlinson","Word=.docx | Excel=.xlsx | PPT=.pptx | Access=.accdb","Excel rows: 1,048,576 | Cols: 16,384 (XFD)","Binary=Base2 | Octal=Base8 | Hex=Base16"]},
+{cat:"English Grammar Rules",color:"#d97706",items:["An: vowel SOUND (an hour, an MLA, an FIR, an honest)","A: consonant SOUND (a university, a European, a one)","Senior/Junior/Prefer → TO (not than)","Since+point time | For+duration","Active→Passive: O+be+V3+by+S","said to → told | today→that day | will→would","Between(2 things) | Among(3+ things)","Fewer=countable | Less=uncountable","Return (not return back) | Repeat (not repeat again)"]},
+{cat:"Indian Constitution",color:"#0891b2",items:["Adopted: Nov 26, 1949 | Enforced: Jan 26, 1950","Ambedkar = Chairman, Drafting Committee","Art 14: Equality | Art 17: No untouchability","Art 19: 6 Freedoms | Art 21: Right to Life","Art 21A: Education (6-14 years)","Art 32: Constitutional Remedies (Heart & Soul)","Lok Sabha: 543, age 25+, 5 years | Speaker heads it","Rajya Sabha: 245, age 30+, VP=Chairman","42nd Amendment = 'Mini Constitution'","National Emergency=Art 352 | President's Rule=Art 356"]},
+{cat:"Key Formulas",color:"#be185d",items:["SI = PRT/100 | CI = P(1+R/100)^T - P","Profit% = (SP-CP)/CP × 100","km/h to m/s: ×5/18 | m/s to km/h: ×18/5","Together: ab/(a+b) days if A=a days, B=b days","Avg speed (same dist) = 2S₁S₂/(S₁+S₂)","Train+pole: L/S | Train+platform: (L₁+L₂)/S","LCM × HCF = Product of two numbers","10%=1/10 | 25%=1/4 | 33.3%=1/3 | 12.5%=1/8","Successive %: a+b+ab/100"]},
+{cat:"Syllogism Rules",color:"#7c3aed",items:["All+All=All | All+No=No | All+Some=No conclusion","Some+Some=No conclusion","Some A are not B → CANNOT reverse","No A is B → No B is A (can reverse)","Some A are B → Some B are A (can reverse)","All A are B → Some A are B ✓ | Some B are A ✓","'Either I or II' = both conclusions are contradictory","ALWAYS draw Venn diagram before answering","Check: must be true in ALL possible diagrams"]},
+];
+
 // ============ APP ============
 const BANKS={
   syl:{title:"🔥 Syllogisms",mcqs:SYL,desc:"MOST ASKED — Statement-Conclusion"},
@@ -405,9 +481,10 @@ function genMock(){
   return all.slice(0,80);
 }
 
+const LS={get:(k,d)=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch{return d;}},set:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch{}}};
+
 export default function App(){
   const[tab,setTab]=useState("study");
-  const[mode,setMode]=useState("mcqs"); // "mcqs" or "notes"
   const[bank,setBank]=useState("syl");
   const[noteBank,setNoteBank]=useState("comp");
   const[qi,setQi]=useState(0);
@@ -416,9 +493,11 @@ export default function App(){
   const[sc,setSc]=useState(0);
   const[tot,setTot]=useState(0);
   const[dn,setDn]=useState(false);
-  const[wrong,setWrong]=useState([]);
+  const[wrong,setWrong]=useState(()=>LS.get("jk_wrong",[]));
   const[wrongMode,setWrongMode]=useState(false);
-  const[days,setDays]=useState({});
+  const[days,setDays]=useState(()=>LS.get("jk_days",{}));
+  const[scores,setScores]=useState(()=>LS.get("jk_scores",{}));
+  const[hard,setHard]=useState(()=>LS.get("jk_hard",[]));
   const[mockQs,setMockQs]=useState([]);
   const[mockActive,setMockActive]=useState(false);
   const[mockTime,setMockTime]=useState(4800);
@@ -427,13 +506,33 @@ export default function App(){
   const[mockSh,setMockSh]=useState(false);
   const[mockSc,setMockSc]=useState(0);
   const[mockDn,setMockDn]=useState(false);
+  const[flashI,setFlashI]=useState(0);
+  const[flashCat,setFlashCat]=useState("all");
+  const[flipped,setFlipped]=useState(false);
+  const[countdown,setCountdown]=useState(dl());
   const timerRef=useRef(null);
 
   const mq=wrongMode?wrong:(BANKS[bank]?BANKS[bank].mcqs:[]);
   const rst=()=>{setQi(0);setSel(null);setSh(false);setSc(0);setTot(0);setDn(false);};
 
-  const pk=(i)=>{if(sh)return;setSel(i);setSh(true);if(i===mq[qi].a)setSc(s=>s+1);else{if(!wrong.find(w=>w.q===mq[qi].q))setWrong(w=>[...w,mq[qi]]);}setTot(t=>t+1);};
+  useEffect(()=>{LS.set("jk_wrong",wrong);},[wrong]);
+  useEffect(()=>{LS.set("jk_days",days);},[days]);
+  useEffect(()=>{LS.set("jk_scores",scores);},[scores]);
+  useEffect(()=>{LS.set("jk_hard",hard);},[hard]);
+  useEffect(()=>{const t=setInterval(()=>setCountdown(dl()),60000);return()=>clearInterval(t);},[]);
+
+  const pk=(i)=>{
+    if(sh)return;
+    setSel(i);setSh(true);
+    const correct=i===mq[qi].a;
+    if(correct)setSc(s=>s+1);
+    else if(!wrong.find(w=>w.q===mq[qi].q))setWrong(w=>[...w,mq[qi]]);
+    setTot(t=>t+1);
+    const k=bank;
+    setScores(s=>{const prev=s[k]||{c:0,t:0};return{...s,[k]:{c:prev.c+(correct?1:0),t:prev.t+1}};});
+  };
   const nx=()=>{if(qi+1>=mq.length)setDn(true);else{setQi(qi+1);setSel(null);setSh(false);}};
+  const markHard=(q)=>{if(!hard.find(h=>h.q===q.q))setHard(h=>[...h,q]);};
 
   useEffect(()=>{
     if(mockActive&&!mockDn&&mockTime>0){timerRef.current=setTimeout(()=>setMockTime(t=>t-1),1000);return()=>clearTimeout(timerRef.current);}
@@ -447,78 +546,118 @@ export default function App(){
 
   const tS=(t)=>({padding:"8px 10px",cursor:"pointer",fontWeight:tab===t?700:400,fontSize:"11px",borderBottom:tab===t?"3px solid #4f46e5":"3px solid transparent",color:tab===t?"#4f46e5":"#666",background:"none",border:"none",whiteSpace:"nowrap"});
 
-  const renderQuiz = (qs, idx, s, shown, score, total, done, onPk, onNx, label) => {
+  // Flashcard helpers
+  const filteredFlash=flashCat==="all"?FLASH:FLASH.filter(f=>f.cat===flashCat);
+  const curFlash=filteredFlash[flashI%filteredFlash.length];
+  const flashNext=()=>{setFlashI(i=>(i+1)%filteredFlash.length);setFlipped(false);};
+  const flashPrev=()=>{setFlashI(i=>(i-1+filteredFlash.length)%filteredFlash.length);setFlipped(false);};
+
+  const renderQuiz = (qs, idx, s, shown, score, total, done, onPk, onNx, label, isStudy) => {
     if (!qs || qs.length === 0) return (<div style={{padding:20,textAlign:"center",color:"#888",fontSize:12}}>No questions yet. Start practicing!</div>);
-    if (done || idx >= qs.length) return (<div style={{textAlign:"center",padding:20,background:"#fafafa",borderRadius:10}}>
-      <div style={{fontSize:32}}>{score >= qs.length * 0.7 ? "🎉" : score >= qs.length * 0.5 ? "👍" : "💪"}</div>
-      <div style={{fontSize:18,fontWeight:700}}>{score}/{qs.length}</div>
-      <div style={{fontSize:11,color:"#666",marginTop:4}}>{score >= qs.length * 0.7 ? "Excellent!" : "Review notes & retry."}</div>
-    </div>);
+    if (done || idx >= qs.length) {
+      const pct=Math.round(score/qs.length*100);
+      return (<div style={{textAlign:"center",padding:20,background:"linear-gradient(135deg,#f8faff,#eef2ff)",borderRadius:12,border:"1px solid #c7d2fe"}}>
+        <div style={{fontSize:40}}>{pct>=80?"🏆":pct>=60?"🎉":pct>=40?"👍":"💪"}</div>
+        <div style={{fontSize:22,fontWeight:800,marginTop:4,color:pct>=60?"#16a34a":"#dc2626"}}>{score}/{qs.length}</div>
+        <div style={{fontSize:14,fontWeight:600,color:"#4f46e5"}}>{pct}% accuracy</div>
+        <div style={{fontSize:11,color:"#666",marginTop:4}}>{pct>=80?"Outstanding! Exam ready for this topic!":pct>=60?"Good! Review wrong answers once.":pct>=40?"Keep practicing — you'll get there!":"Read the notes tab first, then retry."}</div>
+        {score<qs.length&&<div style={{fontSize:10,color:"#888",marginTop:6}}>Wrong answers saved to ❌ tab for review</div>}
+      </div>);
+    }
     const q = qs[idx];
     if (!q || !q.o) return null;
-    return (<div style={{padding:12,background:"#fafafa",borderRadius:10,border:"1px solid #e8e8e8"}}>
-      <div style={{display:"flex",justifyContent:"space-between",fontSize:10,color:"#888",marginBottom:5}}>
-        <span>{label} Q{idx+1}/{qs.length}</span><span>✅{score}/{total}</span>
+    const isHard=hard.find(h=>h.q===q.q);
+    return (<div style={{padding:14,background:"#fafafa",borderRadius:12,border:`2px solid ${isHard?"#fca5a5":"#e8e8e8"}`}}>
+      <div style={{display:"flex",justifyContent:"space-between",fontSize:10,color:"#888",marginBottom:6}}>
+        <span style={{fontWeight:600}}>{label} Q{idx+1}/{qs.length} {isHard?"🔴 Hard":""}</span>
+        <span>✅{score} ❌{total-score}</span>
       </div>
-      <div style={{width:"100%",height:3,background:"#e5e5e5",borderRadius:2,marginBottom:8}}>
-        <div style={{width:`${((idx+1)/qs.length)*100}%`,height:3,background:"#4f46e5",borderRadius:2,transition:"width .3s"}}/>
+      <div style={{width:"100%",height:4,background:"#e5e5e5",borderRadius:2,marginBottom:10}}>
+        <div style={{width:`${((idx)/qs.length)*100}%`,height:4,background:"linear-gradient(90deg,#4f46e5,#7c3aed)",borderRadius:2,transition:"width .3s"}}/>
       </div>
-      <div style={{fontSize:12.5,fontWeight:600,marginBottom:8,whiteSpace:"pre-line"}}>{q.q}</div>
+      <div style={{fontSize:13,fontWeight:600,marginBottom:10,whiteSpace:"pre-line",lineHeight:1.6,color:"#1a1a1a"}}>{q.q}</div>
       {q.o.map((o, i) => {
         const isA = i === q.a, isS = i === s;
-        let bg = "#fff", bd = "1px solid #ddd";
-        if (shown) { if (isA) { bg = "#dcfce7"; bd = "2px solid #22c55e"; } else if (isS) { bg = "#fee2e2"; bd = "2px solid #ef4444"; } }
-        return (<div key={i} onClick={() => onPk(i)} style={{padding:"7px 10px",marginBottom:3,borderRadius:6,cursor:shown?"default":"pointer",background:bg,border:bd,fontSize:11.5,transition:"all .15s"}}><b style={{marginRight:4}}>{String.fromCharCode(65+i)}.</b>{o}</div>);
+        let bg="#fff",bd="1.5px solid #ddd",cl="#1a1a1a";
+        if(shown){if(isA){bg="#dcfce7";bd="2px solid #22c55e";cl="#15803d";}else if(isS){bg="#fee2e2";bd="2px solid #ef4444";cl="#dc2626";}}
+        return (<div key={i} onClick={() => onPk(i)} style={{padding:"9px 12px",marginBottom:4,borderRadius:8,cursor:shown?"default":"pointer",background:bg,border:bd,fontSize:12,transition:"all .15s",color:cl,display:"flex",alignItems:"center",gap:8}}>
+          <span style={{fontWeight:700,color:shown&&isA?"#15803d":shown&&isS?"#dc2626":"#4f46e5",minWidth:18}}>{String.fromCharCode(65+i)}.</span>{o}
+          {shown&&isA&&<span style={{marginLeft:"auto",fontSize:10}}>✓ Correct</span>}
+          {shown&&isS&&!isA&&<span style={{marginLeft:"auto",fontSize:10}}>✗ Wrong</span>}
+        </div>);
       })}
-      {shown && (<button onClick={onNx} style={{marginTop:6,padding:"6px 14px",background:"#4f46e5",color:"#fff",border:"none",borderRadius:6,fontWeight:600,cursor:"pointer",fontSize:11}}>{idx+1 >= qs.length ? "Results →" : "Next →"}</button>)}
+      {shown&&(<div style={{display:"flex",gap:6,marginTop:8,flexWrap:"wrap"}}>
+        <button onClick={onNx} style={{padding:"7px 18px",background:"#4f46e5",color:"#fff",border:"none",borderRadius:8,fontWeight:700,cursor:"pointer",fontSize:12}}>{idx+1>=qs.length?"See Results →":"Next →"}</button>
+        {isStudy&&!isHard&&<button onClick={()=>markHard(q)} style={{padding:"7px 12px",background:"#fef2f2",color:"#dc2626",border:"1px solid #fca5a5",borderRadius:8,cursor:"pointer",fontSize:11}}>🔴 Mark Hard</button>}
+        {isStudy&&isHard&&<span style={{padding:"7px 12px",background:"#fef2f2",color:"#dc2626",borderRadius:8,fontSize:11}}>🔴 Saved as Hard</span>}
+      </div>)}
+      {!shown&&<div style={{fontSize:10,color:"#aaa",marginTop:6}}>Tap an option to answer</div>}
     </div>);
   };
 
   const noteLabels = {comp: "💻 Computers", eng: "📝 English", jk: "🏔️ J&K GK", gk: "📚 India GK", syl: "🔥 Syllogism Rules", math: "🧮 Maths & Reasoning"};
 
-  const tabList = [["plan","📅 Plan"],["battle","⚔️ Day 1"],["study","📖 MCQs"],["notes","📝 Notes"],["mock","🎯 Mock"],["wrong","❌ Wrong"],["tips","💡 Tips"]];
+  const tabList = [["plan","📅 Plan"],["battle","⚔️ Test"],["study","📖 MCQs"],["flash","🃏 Flash"],["notes","📝 Notes"],["quick","⚡ Quick"],["mock","🎯 Mock"],["wrong","❌ Wrong"],["tips","💡 Tips"]];
 
   const handleTab = (t) => {
     setTab(t);
     if (t === "study") { rst(); setWrongMode(false); }
-    if (t === "wrong") { rst(); setWrongMode(true); }
+    if (t === "wrong") { rst(); setWrongMode(false); }
     if (t === "battle" || t === "mock") { setMockActive(false); setMockDn(false); }
+    if (t === "flash") { setFlipped(false); }
   };
 
   const tipData = [
-    {t: "🔥 SYLLOGISM (5-8 marks every paper!)", tips: ["ALWAYS draw Venn diagrams", "All+All=All | All+No=No | Some+Some=No conclusion", "'Either I or II' = contradictory conclusions", "Practice 90+ syllogism Qs until 90%+ score"]},
-    {t: "📋 PAPER: 80 Qs, 80 min, 4×20 marks", tips: ["English: Articles, Voice, Narration, Idioms", "GK+J&K: Geography, History always asked", "Maths+Reasoning: Series, Syllogisms, Percentage", "Computers: MS Office, Internet, Abbreviations"]},
-    {t: "⚡ MCQ HACKS", tips: ["Eliminate 2 → 50% guess chance", "'Always/Never' = usually wrong option", "Similar options → answer is one of them", "No negative → ATTEMPT EVERYTHING"]},
-    {t: "🧠 YOUR DEVELOPER EDGE", tips: ["Computers = 80% known = free 16+ marks", "Reasoning = daily coding skill = fast learning", "Focus: J&K GK(weakest) + Syllogisms(most asked)", "Use Wrong tab to eliminate weaknesses"]},
+    {t: "🔥 SYLLOGISM — 5-8 marks every paper!", tips: ["ALWAYS draw Venn diagram before answering","All+All=All | All+No=No | All+Some=No conclusion","Some+Some=No conclusion (GOLDEN RULE)","'Either I or II' = when conclusions are contradictory","Conclusion must be true in ALL possible diagrams","Practice until 80%+ accuracy — it's pure logic!"]},
+    {t: "📋 PAPER PATTERN — 80 Qs, 80 min", tips: ["English ~20: Articles, Voice, Narration, Idioms, Synonyms","GK+J&K ~20: Geography, History, Culture — J&K heavy","Maths+Reasoning ~20: Series, Syllogisms, Percentage","Computers ~20: MS Office, Internet, Abbreviations","NO NEGATIVE MARKING → Attempt ALL 80 questions!","Cutoff: General ~45-55/80 | Reserved ~35-45/80"]},
+    {t: "⚡ MCQ STRATEGY", tips: ["Read all 4 options before answering","Eliminate 2 wrong options → 50% chance remains","'Always/Never/All' options = usually wrong","If 2 options look similar → answer is one of them","Stuck? Mark your best guess and move on — no negative","Spend max 60 sec per question — don't overthink"]},
+    {t: "🧠 MEMORY TIPS — For slow remembering", tips: ["Use 🃏 Flash tab: try to recall BEFORE flipping (active recall)","Read → look away → say it out loud → check (3R method)","Make silly connections: Wular=Wonderful Ul-traLARGE lake","Teach it: explain a fact to yourself as if teaching a child","Repeat after 10 min, 1 hour, 1 day, 1 week (spaced repetition)","Mark hard Qs 🔴 and revisit daily — repetition builds memory"]},
+    {t: "🗺️ J&K MNEMONICS", tips:["RIVERS: 'Just Come Take Rest In Kashmir' = Jhelum, Chenab, Tawi, Ravi, Indus, Kishanganga","LAKES order by size: Wular(largest)→Dal→Manasbal→Nagin","MUGHAL: Akbar(1586)→Jahangir(Shalimar)→Shah Jahan(Taj)","KEY DATES: 1846=₹75L sale | 1947=Accession | 2019=Art370","Budshah=Zain | Sher-e-Kashmir=Sheikh Abdullah | Nightingale=Habba Khatoon","Pampore=Saffron | Anantnag=Willow/Cricket bats | Dachigam=Hangul"]},
+    {t: "💻 COMPUTERS MNEMONICS", tips:["Generations: 'Very Tiny Integrated Micro AI' = Vacuum, Transistor, IC, Micro, AI","SMTP=Send, POP3=Pickup = for email direction","RAM=Runaway(volatile) | ROM=Remains(permanent)","Office extensions: Word=docX | Excel=xlsX | PPT=pptX | Access=accDB","IPv4=32bit(4×8) | IPv6=128bit(6 doesn't fit in 32)","Cache=fastest | RAM=fast | HDD=slowest (C→R→H alphabetical = slow order)"]},
   ];
 
+  const doneCount=Object.values(days).filter(Boolean).length;
   const renderSchedule = () => {
     return SCHED.map((s) => {
       const d = days[s.d];
-      const ex = s.d === 13;
-      const op = (d && !ex) ? 0.7 : 1;
+      const ex = s.d === 25;
+      const isMock = s.t.toLowerCase().includes("mock");
+      const op = (d && !ex) ? 0.75 : 1;
+      let border=d?"2px solid #22c55e":"1px solid #e5e5e5",bg=d?"#f0fdf4":"#fff";
+      if(ex){border="2px solid #dc2626";bg="#fef2f2";}
+      else if(isMock){border="2px solid #7c3aed";bg="#faf5ff";}
       return (
-        <div key={s.d} onClick={() => setDays((p) => ({...p, [s.d]: !p[s.d]}))} style={{padding: "8px 10px", marginBottom: 3, borderRadius: 7, cursor: "pointer", border: ex ? "2px solid #ef4444" : d ? "2px solid #22c55e" : "1px solid #e5e5e5", background: ex ? "#fef2f2" : d ? "#f0fdf4" : "#fff", opacity: op}}>
-          <div style={{display: "flex", justifyContent: "space-between"}}>
-            <span style={{fontWeight: 700, fontSize: 11}}>{d && !ex ? "✅" : ex ? "🎯" : "⬜"} Day {s.d}: {s.t}</span>
-            <span style={{fontSize: 9, color: "#888"}}>{s.hr}</span>
+        <div key={s.d} onClick={() => setDays((p) => ({...p, [s.d]: !p[s.d]}))} style={{padding: "9px 12px", marginBottom: 4, borderRadius: 9, cursor: "pointer", border, background: bg, opacity: op, transition:"all .15s"}}>
+          <div style={{display: "flex", justifyContent: "space-between", alignItems:"center"}}>
+            <span style={{fontWeight: 700, fontSize: 12}}>{d&&!ex ? "✅" : ex ? "🎯" : isMock?"🎯":"⬜"} Day {s.d}: <span style={{color:ex?"#dc2626":isMock?"#7c3aed":"#1a1a1a"}}>{s.t}</span></span>
+            <span style={{fontSize: 10, color: "#888", fontWeight:600}}>{s.dt}</span>
           </div>
-          <div style={{fontSize: 10, color: "#555", marginTop: 2}}>{s.tk.join(" • ")}</div>
+          <div style={{fontSize: 10.5, color: "#555", marginTop: 3, lineHeight:1.6}}>{s.tk.join(" • ")}</div>
+          {ex&&<div style={{fontSize:10,color:"#dc2626",fontWeight:700,marginTop:4}}>🚀 NO NEGATIVE MARKING — Attempt ALL 80 questions!</div>}
         </div>
       );
     });
   };
 
   return (
-    <div style={{fontFamily: "-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif", maxWidth: 820, margin: "0 auto", color: "#1a1a1a"}}>
-      <div style={{background: "linear-gradient(135deg,#4f46e5,#7c3aed)", padding: "14px 16px", borderRadius: 12, color: "#fff", marginBottom: 10}}>
-        <div style={{fontSize: 15, fontWeight: 800}}>JKSSB Junior Assistant — Ultimate Prep</div>
-        <div style={{display: "flex", gap: 6, marginTop: 8, fontSize: 10, flexWrap: "wrap"}}>
-          <div style={{background: "rgba(255,255,255,.2)", padding: "4px 9px", borderRadius: 6}}><b>{dl()}</b> days</div>
-          <div style={{background: "rgba(255,255,255,.2)", padding: "4px 9px", borderRadius: 6}}><b>{totalQ}</b> MCQs</div>
-          <div style={{background: "rgba(255,255,255,.2)", padding: "4px 9px", borderRadius: 6}}>{"❌"}<b>{wrong.length}</b> wrong</div>
-          <div style={{background: "rgba(255,255,255,.15)", padding: "4px 9px", borderRadius: 6}}>5 Apr 2026</div>
+    <div style={{fontFamily: "-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif", maxWidth: 820, margin: "0 auto", color: "#1a1a1a", padding: "8px"}}>
+      <div style={{background: "linear-gradient(135deg,#4338ca,#7c3aed,#db2777)", padding: "16px", borderRadius: 14, color: "#fff", marginBottom: 10}}>
+        <div style={{fontSize: 16, fontWeight: 800, letterSpacing:"-0.3px"}}>JKSSB Junior Assistant 2026</div>
+        <div style={{fontSize: 11, opacity: 0.85, marginTop: 2}}>Exam: April 18, 2026 — You can do this!</div>
+        <div style={{display: "flex", gap: 6, marginTop: 10, fontSize: 10, flexWrap: "wrap"}}>
+          <div style={{background: "rgba(255,255,255,.25)", padding: "5px 10px", borderRadius: 8, fontWeight:700}}>⏳ {countdown.d}d {countdown.h}h {countdown.m}m left</div>
+          <div style={{background: "rgba(255,255,255,.2)", padding: "5px 10px", borderRadius: 8}}><b>{totalQ}</b> MCQs</div>
+          <div style={{background: "rgba(255,255,255,.2)", padding: "5px 10px", borderRadius: 8}}>❌ <b>{wrong.length}</b> wrong</div>
+          <div style={{background: "rgba(255,255,255,.2)", padding: "5px 10px", borderRadius: 8}}>🔴 <b>{hard.length}</b> hard</div>
+          <div style={{background: "rgba(255,255,255,.2)", padding: "5px 10px", borderRadius: 8}}>🃏 <b>{FLASH.length}</b> cards</div>
         </div>
+        {Object.keys(scores).length>0&&<div style={{display:"flex",gap:4,marginTop:6,flexWrap:"wrap"}}>
+          {Object.entries(scores).map(([k,v])=>(
+            <div key={k} style={{background:"rgba(255,255,255,.15)",padding:"3px 8px",borderRadius:6,fontSize:9}}>
+              {BANKS[k]?.title.split(" ").slice(1).join(" ")}: <b>{Math.round(v.c/v.t*100)}%</b>
+            </div>
+          ))}
+        </div>}
       </div>
 
       <div style={{display: "flex", gap: 1, borderBottom: "1px solid #e5e5e5", marginBottom: 8, overflowX: "auto"}}>
@@ -528,39 +667,115 @@ export default function App(){
       </div>
 
       {tab === "plan" && (
-        <div>{renderSchedule()}</div>
+        <div>
+          <div style={{display:"flex",gap:6,marginBottom:8}}>
+            <div style={{flex:1,padding:"8px",background:"linear-gradient(135deg,#f0fdf4,#dcfce7)",borderRadius:9,border:"1px solid #86efac",textAlign:"center"}}>
+              <div style={{fontSize:18,fontWeight:800,color:"#16a34a"}}>{doneCount}/24</div>
+              <div style={{fontSize:9,color:"#15803d"}}>Days Done</div>
+            </div>
+            <div style={{flex:2,padding:"8px",background:"#f8faff",borderRadius:9,border:"1px solid #c7d2fe"}}>
+              <div style={{width:"100%",height:6,background:"#e5e7eb",borderRadius:4}}>
+                <div style={{width:`${(doneCount/24)*100}%`,height:6,background:"linear-gradient(90deg,#4f46e5,#7c3aed)",borderRadius:4,transition:"width .3s"}}/>
+              </div>
+              <div style={{fontSize:9,color:"#4f46e5",marginTop:4,fontWeight:600}}>Exam: Apr 18, 2026 — {countdown.d} days left</div>
+              <div style={{fontSize:9,color:"#888",marginTop:1}}>Tap a day to mark it complete ✅</div>
+            </div>
+          </div>
+          {renderSchedule()}
+        </div>
       )}
 
       {tab === "study" && (
         <div>
           <div style={{display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 4, marginBottom: 8}}>
-            {bKeys.map((k) => (
-              <button key={k} onClick={() => {setBank(k); rst(); setWrongMode(false);}} style={{padding: "8px 6px", borderRadius: 7, border: bank === k ? "2px solid #4f46e5" : "1px solid #e5e5e5", background: bank === k ? "#eef2ff" : "#fff", cursor: "pointer", textAlign: "left", fontSize: 10}}>
-                <div style={{fontWeight: bank === k ? 700 : 500}}>{BANKS[k].title}</div>
-                <div style={{color: "#888", fontSize: 9}}>{BANKS[k].mcqs.length} Qs</div>
-              </button>
-            ))}
+            {bKeys.map((k) => {
+              const s=scores[k];const pct=s&&s.t>0?Math.round(s.c/s.t*100):null;
+              return(<button key={k} onClick={() => {setBank(k); rst(); setWrongMode(false);}} style={{padding: "9px 8px", borderRadius: 9, border: bank === k ? "2px solid #4f46e5" : "1px solid #e5e5e5", background: bank === k ? "#eef2ff" : "#fff", cursor: "pointer", textAlign: "left", fontSize: 10}}>
+                <div style={{fontWeight: 700,fontSize:11}}>{BANKS[k].title}</div>
+                <div style={{color: "#888", fontSize: 9, marginTop:2}}>{BANKS[k].mcqs.length} Qs {pct!==null?<span style={{color:pct>=70?"#16a34a":pct>=50?"#d97706":"#dc2626",fontWeight:600}}>• {pct}%</span>:""}</div>
+              </button>);
+            })}
           </div>
-          {renderQuiz(mq, qi, sel, sh, sc, tot, dn, pk, nx, "")}
+          <div style={{fontSize:10,color:"#666",marginBottom:6,padding:"6px 10px",background:"#f0f9ff",borderRadius:7,border:"1px solid #bae6fd"}}>
+            💡 After answering, mark tough questions 🔴 Hard to review them separately
+          </div>
+          {renderQuiz(mq, qi, sel, sh, sc, tot, dn, pk, nx, BANKS[bank]?.title||"", true)}
           {dn && (
-            <button onClick={rst} style={{marginTop: 6, padding: "6px 14px", background: "#4f46e5", color: "#fff", border: "none", borderRadius: 6, fontWeight: 600, cursor: "pointer", fontSize: 11}}>{"🔄"} Retry</button>
+            <button onClick={rst} style={{marginTop: 8, padding: "8px 18px", background: "#4f46e5", color: "#fff", border: "none", borderRadius: 8, fontWeight: 700, cursor: "pointer", fontSize: 12}}>🔄 Retry</button>
           )}
         </div>
       )}
 
       {tab === "notes" && (
         <div>
+          <div style={{fontSize:10,color:"#666",marginBottom:8,padding:"6px 10px",background:"#fef9ee",borderRadius:7,border:"1px solid #fde68a"}}>
+            📌 Read each section once → Then test yourself with 🃏 Flash Cards
+          </div>
           <div style={{display: "flex", gap: 3, marginBottom: 8, overflowX: "auto", paddingBottom: 2}}>
             {nKeys.map((k) => (
-              <button key={k} onClick={() => setNoteBank(k)} style={{padding: "6px 10px", borderRadius: 6, border: noteBank === k ? "2px solid #4f46e5" : "1px solid #e5e5e5", background: noteBank === k ? "#eef2ff" : "#fff", cursor: "pointer", fontSize: 10, fontWeight: noteBank === k ? 700 : 400, whiteSpace: "nowrap", flexShrink: 0}}>{noteLabels[k] || k}</button>
+              <button key={k} onClick={() => setNoteBank(k)} style={{padding: "7px 11px", borderRadius: 7, border: noteBank === k ? "2px solid #4f46e5" : "1px solid #e5e5e5", background: noteBank === k ? "#eef2ff" : "#fff", cursor: "pointer", fontSize: 10, fontWeight: noteBank === k ? 700 : 400, whiteSpace: "nowrap", flexShrink: 0}}>{noteLabels[k] || k}</button>
             ))}
           </div>
           {(NOTES[noteBank] || []).map((n, i) => (
-            <div key={i} style={{marginBottom: 6, padding: 10, background: "#fafafa", borderRadius: 8, border: "1px solid #e8e8e8"}}>
-              <div style={{fontWeight: 700, fontSize: 12, color: "#4f46e5", marginBottom: 3}}>{n.t}</div>
+            <div key={i} style={{marginBottom: 8, padding: 12, background: "#fafafa", borderRadius: 10, border: "1px solid #e8e8e8"}}>
+              <div style={{fontWeight: 700, fontSize: 13, color: "#4f46e5", marginBottom: 6, paddingBottom:4, borderBottom:"2px solid #e0e7ff"}}>{n.t}</div>
               {n.p.map((p, j) => (
-                <div key={j} style={{fontSize: 10.5, padding: "2px 0", lineHeight: 1.6, borderBottom: j < n.p.length - 1 ? "1px solid #eee" : "none"}}>{p}</div>
+                <div key={j} style={{fontSize: 11, padding: "4px 0 4px 8px", lineHeight: 1.7, borderBottom: j < n.p.length - 1 ? "1px solid #f0f0f0" : "none", borderLeft:"3px solid #e0e7ff"}}>{p}</div>
               ))}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {tab === "flash" && (
+        <div>
+          <div style={{marginBottom:8,display:"flex",gap:4,flexWrap:"wrap"}}>
+            {[["all","All Cards"],["jk","J&K GK"],["comp","Computers"],["eng","English"],["gk","India GK"],["math","Maths"],["syl","Syllogism"]].map(([k,l])=>(
+              <button key={k} onClick={()=>{setFlashCat(k);setFlashI(0);setFlipped(false);}} style={{padding:"5px 10px",borderRadius:6,border:flashCat===k?"2px solid #7c3aed":"1px solid #e5e5e5",background:flashCat===k?"#f5f3ff":"#fff",cursor:"pointer",fontSize:10,fontWeight:flashCat===k?700:400}}>{l}</button>
+            ))}
+          </div>
+          <div style={{textAlign:"center",fontSize:10,color:"#888",marginBottom:8}}>Card {(flashI%filteredFlash.length)+1} / {filteredFlash.length} — Tap card to reveal answer</div>
+          {curFlash&&(
+            <div onClick={()=>setFlipped(f=>!f)} style={{cursor:"pointer",minHeight:180,padding:20,borderRadius:14,border:"2px solid #7c3aed",background:flipped?"linear-gradient(135deg,#f5f3ff,#ede9fe)":"linear-gradient(135deg,#eef2ff,#e0e7ff)",display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",textAlign:"center",transition:"all .2s"}}>
+              {!flipped?(
+                <div>
+                  <div style={{fontSize:11,color:"#7c3aed",fontWeight:700,marginBottom:12,textTransform:"uppercase",letterSpacing:"0.5px"}}>🃏 QUESTION — tap to flip</div>
+                  <div style={{fontSize:16,fontWeight:700,color:"#1a1a1a",lineHeight:1.5}}>{curFlash.f}</div>
+                </div>
+              ):(
+                <div>
+                  <div style={{fontSize:11,color:"#16a34a",fontWeight:700,marginBottom:12,textTransform:"uppercase",letterSpacing:"0.5px"}}>✅ ANSWER</div>
+                  <div style={{fontSize:13,fontWeight:600,color:"#1a1a1a",lineHeight:1.8,whiteSpace:"pre-line"}}>{curFlash.b.replace(/•/g,"\n•")}</div>
+                </div>
+              )}
+            </div>
+          )}
+          <div style={{display:"flex",gap:8,justifyContent:"center",marginTop:12}}>
+            <button onClick={flashPrev} style={{padding:"9px 20px",background:"#f1f5f9",border:"1px solid #e2e8f0",borderRadius:9,cursor:"pointer",fontSize:13,fontWeight:600}}>← Prev</button>
+            <button onClick={()=>setFlipped(f=>!f)} style={{padding:"9px 20px",background:"#7c3aed",color:"#fff",border:"none",borderRadius:9,cursor:"pointer",fontSize:13,fontWeight:600}}>Flip 🔄</button>
+            <button onClick={flashNext} style={{padding:"9px 20px",background:"#f1f5f9",border:"1px solid #e2e8f0",borderRadius:9,cursor:"pointer",fontSize:13,fontWeight:600}}>Next →</button>
+          </div>
+          <div style={{marginTop:8,padding:"8px 12px",background:"#fef9ee",borderRadius:8,border:"1px solid #fde68a",fontSize:10,color:"#92400e"}}>
+            💡 Memory tip: Read the question, try to recall answer in your head FIRST, then flip. This is called active recall and it doubles retention!
+          </div>
+        </div>
+      )}
+
+      {tab === "quick" && (
+        <div>
+          <div style={{fontSize:10,color:"#666",marginBottom:8,padding:"8px 12px",background:"#f0fdf4",borderRadius:8,border:"1px solid #86efac"}}>
+            ⚡ Quick revision before exam — scan all facts in 20 minutes!
+          </div>
+          {QUICK.map((sec,i)=>(
+            <div key={i} style={{marginBottom:8,borderRadius:10,border:`2px solid ${sec.color}22`,overflow:"hidden"}}>
+              <div style={{background:sec.color,color:"#fff",padding:"7px 12px",fontWeight:700,fontSize:12}}>{sec.cat}</div>
+              <div style={{padding:"8px 12px",background:`${sec.color}08`}}>
+                {sec.items.map((item,j)=>(
+                  <div key={j} style={{fontSize:11,padding:"3px 0",lineHeight:1.6,borderBottom:j<sec.items.length-1?"1px solid #f0f0f0":"none",display:"flex",gap:6}}>
+                    <span style={{color:sec.color,fontWeight:700,flexShrink:0}}>▸</span>{item}
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
         </div>
@@ -602,22 +817,40 @@ export default function App(){
 
       {tab === "wrong" && (
         <div>
-          {wrong.length === 0 ? (
+          <div style={{display:"flex",gap:6,marginBottom:8}}>
+            <div style={{flex:1,padding:"8px 10px",background:"#fef2f2",borderRadius:8,border:"1px solid #fca5a5",textAlign:"center"}}>
+              <div style={{fontSize:18,fontWeight:800,color:"#dc2626"}}>{wrong.length}</div>
+              <div style={{fontSize:9,color:"#991b1b"}}>Wrong Answers</div>
+            </div>
+            <div style={{flex:1,padding:"8px 10px",background:"#fff7ed",borderRadius:8,border:"1px solid #fdba74",textAlign:"center"}}>
+              <div style={{fontSize:18,fontWeight:800,color:"#ea580c"}}>{hard.length}</div>
+              <div style={{fontSize:9,color:"#c2410c"}}>Marked Hard 🔴</div>
+            </div>
+          </div>
+          {wrong.length === 0 && hard.length===0 ? (
             <div style={{textAlign: "center", padding: 24, color: "#888"}}>
-              <div style={{fontSize: 32}}>{"✨"}</div>
-              <div style={{fontSize: 13, fontWeight: 600, marginTop: 6}}>No wrong answers yet!</div>
-              <div style={{fontSize: 11, marginTop: 3}}>Practice MCQs and wrong ones appear here.</div>
+              <div style={{fontSize: 40}}>✨</div>
+              <div style={{fontSize: 14, fontWeight: 700, marginTop: 8}}>Perfect! No wrong answers!</div>
+              <div style={{fontSize: 11, marginTop: 4}}>Practice MCQs and wrong ones appear here automatically.</div>
             </div>
           ) : (
             <div>
-              <div style={{padding: "6px 10px", background: "#fef2f2", borderRadius: 7, marginBottom: 8, fontSize: 10, color: "#991b1b", border: "1px solid #fca5a5", display: "flex", justifyContent: "space-between", alignItems: "center"}}>
-                <span>{"❌"} {wrong.length} wrong - practice until ALL right!</span>
-                <button onClick={() => {setWrong([]); rst();}} style={{padding: "2px 8px", background: "#fee2e2", border: "1px solid #fca5a5", borderRadius: 4, cursor: "pointer", fontSize: 9}}>Clear</button>
-              </div>
-              {renderQuiz(wrong, qi, sel, sh, sc, tot, dn, pk, nx, "WRONG")}
-              {dn && (
-                <button onClick={rst} style={{marginTop: 6, padding: "6px 14px", background: "#ef4444", color: "#fff", border: "none", borderRadius: 6, fontWeight: 600, cursor: "pointer", fontSize: 11}}>{"🔄"} Retry Wrong</button>
-              )}
+              {wrong.length>0&&<>
+                <div style={{padding: "8px 12px", background: "#fef2f2", borderRadius: 8, marginBottom: 8, fontSize: 11, color: "#991b1b", border: "1px solid #fca5a5", display: "flex", justifyContent: "space-between", alignItems: "center"}}>
+                  <span>❌ {wrong.length} wrong — practice until ALL correct!</span>
+                  <button onClick={() => {setWrong([]); rst();}} style={{padding: "3px 10px", background: "#fee2e2", border: "1px solid #fca5a5", borderRadius: 6, cursor: "pointer", fontSize: 10}}>Clear All</button>
+                </div>
+                {renderQuiz(wrong, qi, sel, sh, sc, tot, dn, pk, nx, "WRONG REVIEW")}
+                {dn && (<button onClick={rst} style={{marginTop: 8, padding: "8px 18px", background: "#ef4444", color: "#fff", border: "none", borderRadius: 8, fontWeight: 700, cursor: "pointer", fontSize: 12}}>🔄 Retry Wrong Answers</button>)}
+              </>}
+              {hard.length>0&&wrong.length===0&&<div>
+                <div style={{padding:"8px 12px",background:"#fff7ed",borderRadius:8,marginBottom:8,fontSize:11,color:"#c2410c",border:"1px solid #fdba74",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                  <span>🔴 {hard.length} questions marked as Hard</span>
+                  <button onClick={()=>{setHard([]);rst();}} style={{padding:"3px 10px",background:"#ffedd5",border:"1px solid #fdba74",borderRadius:6,cursor:"pointer",fontSize:10}}>Clear Hard</button>
+                </div>
+                {renderQuiz(hard,qi,sel,sh,sc,tot,dn,pk,nx,"HARD QS")}
+                {dn&&<button onClick={rst} style={{marginTop:8,padding:"8px 18px",background:"#ea580c",color:"#fff",border:"none",borderRadius:8,fontWeight:700,cursor:"pointer",fontSize:12}}>🔄 Retry Hard Questions</button>}
+              </div>}
             </div>
           )}
         </div>
@@ -688,7 +921,7 @@ export default function App(){
         </div>
       )}
 
-      <div style={{textAlign:"center",padding:8,fontSize:9,color:"#aaa"}}>{totalQ} MCQs • Notes • Mock Test • Wrong Tracker</div>
+      <div style={{textAlign:"center",padding:10,fontSize:9,color:"#aaa",borderTop:"1px solid #f0f0f0",marginTop:8}}>{totalQ} MCQs • {FLASH.length} Flash Cards • Notes • Mock Test • Wrong Tracker • Exam: Apr 18, 2026</div>
     </div>
   );
 }
